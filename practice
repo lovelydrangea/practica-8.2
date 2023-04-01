@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+struct circulo{
+    float x;
+    float y;
+    float r;
+};
+
+float calcular_area(float r){
+    return 3.14 * r * r;
+}
+
+void imprimir_circulo(circulo c){
+    float area = calcular_area(c.r);
+    cout << "El circulo de posicion (" << c.x << "," << c.y << ") y radio " << c.r << " tiene un area de " << area << " unidades cuadradas." << endl;
+}
+
+circulo encontrar_mayor(circulo circulos[], int n){
+    circulo mayor = circulos[0];
+    for(int i = 1; i < n; i++){
+        if(circulos[i].r > mayor.r){
+            mayor = circulos[i];
+        }
+    }
+    return mayor;
+}
+
+circulo encontrar_mas_lejano(circulo circulos[], int n){
+    circulo mas_lejano = circulos[0];
+    float distancia_mas_lejano = sqrt(circulos[0].x*circulos[0].x + circulos[0].y*circulos[0].y);
+    for(int i = 1; i < n; i++){
+        float distancia = sqrt(circulos[i].x*circulos[i].x + circulos[i].y*circulos[i].y);
+        if(distancia > distancia_mas_lejano){
+            mas_lejano = circulos[i];
+            distancia_mas_lejano = distancia;
+        }
+    }
+    return mas_lejano;
+}
+
+int main(){
+    const int n = 5;
+    circulo circulos[n];
+    for(int i = 0; i < n; i++){
+        cout << "Ingrese la posicion (x,y) y el radio del circulo " << i+1 << ": ";
+        cin >> circulos[i].x >> circulos[i].y >> circulos[i].r;
+    }
+    for(int i = 0; i < n; i++){
+        imprimir_circulo(circulos[i]);
+    }
+    circulo mayor = encontrar_mayor(circulos, n);
+    cout << "El circulo de posicion (" << mayor.x << "," << mayor.y << ") y radio " << mayor.r << " es el mayor de todos." << endl;
+    circulo mas_lejano = encontrar_mas_lejano(circulos, n);
+    cout << "El circulo de posicion (" << mas_lejano.x << "," << mas_lejano.y << ") y radio " << mas_lejano.r << " es el mas lejano de todos del origen." << endl;
+    return 0;
+}
